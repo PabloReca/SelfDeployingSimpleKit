@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  web-server:
+    build:
+      context: ./docker/web-server
+      dockerfile: dockerFile
+    ports:
+      - "80:80"
+    volumes:
+      - web-server-data:/usr/share/nginx/html
+
+  dns-client:
+    build:
+      context: docker/ddns-client
+      dockerfile: dockerFile
+    volumes:
+      - ddns-client-data:/ddns_updater.sh
+    env_file:
+      - .env
+
+volumes:
+  web-server-data:
+  dns-client-data:
