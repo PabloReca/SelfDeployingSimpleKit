@@ -10,10 +10,11 @@ services:
     volumes:
       - ./src:/usr/share/nginx/html
 
-  ddns-client:
-    build:
-      context: ./docker/ddns-client
-      dockerfile: dockerFile
-    env_file:
-      - .env
-
+  cloudflare-ddns:
+    image: oznu/cloudflare-ddns:latest
+    restart: always
+    environment:
+      - API_KEY=${CLOUDFLARE_API_KEY}
+      - ZONE=${CLOUDFLARE_ZONE}
+      - SUBDOMAIN=${CLOUDFLARE_SUBDOMAIN}
+      - PROXIED=false
